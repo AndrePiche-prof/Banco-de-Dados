@@ -1,0 +1,53 @@
+CREATE TABLE Pessoa(
+    idPes SERIAL PRIMARY KEY,
+    nomePes TEXT NOT NULL,
+    DataNascPes DATE, 
+    cidadePes TEXT,
+    ruaPes TEXT,
+    numeroPes INT
+);
+
+CREATE TABLE Gerente(
+	idGerente INT NOT NULL,
+	Salario REAL,
+	PRIMARY KEY (idGerente),
+	CONSTRAINT idGerente FOREIGN KEY (idGerente) REFERENCES Pessoa(idPes)
+	
+);
+
+CREATE TABLE telefone (
+    idTel SERIAL PRIMARY KEY, 
+    numeroTel TEXT,
+    tipoTel TEXT,
+    idPesFK INT,
+    FOREIGN KEY (idPesFK)REFERENCES Pessoa(idPes)
+);
+
+CREATE TABLE Evento(
+    idEv SERIAL PRIMARY KEY, 
+    descEv TEXT,
+    dataEv DATE,
+    horaEv TIME,
+    cidadeEv TEXT,
+    ruaEv TEXT,
+    numeroEv INT
+);
+
+CREATE TABLE Pes_Ev (
+    idEv INT NOT NULL,
+    idPes INT NOT NULL,
+    HoraChegada TIME,
+    PRIMARY KEY(idEv, idPes),
+
+    FOREIGN KEY (idPes)REFERENCES Pessoa(idPes)
+      ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    FOREIGN KEY (idEv) REFERENCES Evento(idEv)
+      ON UPDATE CASCADE ON DELETE RESTRICT
+	);
+
+INSERT INTO Pessoa (nomePes, DataNascPes)
+	values ('Jose','21/09/1994'),
+	('Andréa','07/10/1991');
+select * from pessoa;
+delete from pessoa where idpes=1;
